@@ -1,0 +1,22 @@
+---
+# Consul & Docker - Pre-requisites for testing this role
+- name: Install Consul and Docker
+  hosts: test-kitchen
+
+  vars:
+    consul_datacenter:  kitchenDC
+    consul_encrypt_key: '74d+D4bl59FeKo0r+U5lSA=='
+    consul_primary_node: localhost
+    consul_nodes:
+      - "{{ ansible_default_ipv4.address }}"
+    registrator_service_registry_backend: consul
+    registrator_service_registry_host: "{{ ansible_default_ipv4.address }}"
+    registrator_service_registry_port: 8500
+    nginx_consul_backend_host: "{{ ansible_default_ipv4.address }}"
+    nginx_consul_backend_port: 8500
+
+  roles:
+    - wunzeco.consul
+    - wunzeco.docker
+    - wunzeco.registrator
+    - ansible-nginx-consul

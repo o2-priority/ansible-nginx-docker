@@ -1,0 +1,24 @@
+---
+nginx_consul_conf_dir: '/data/nginx'
+
+nginx_consul_backend_host:
+nginx_consul_backend_port: 8500
+
+nginx_consul_ports:
+  - "80:80"
+
+nginx_consul_dirs:
+  - "{{ nginx_consul_conf_dir }}/logs"
+  - "{{ nginx_consul_conf_dir }}/conf.d"
+  - "{{ nginx_consul_conf_dir }}/servers"
+  - "{{ nginx_consul_conf_dir }}/includes"
+  - "{{ nginx_consul_conf_dir }}/upstreams"
+  - "{{ nginx_consul_conf_dir }}/templates"
+
+nginx_consul_volumes:
+  - "{{ nginx_consul_conf_dir }}/conf.d:/etc/nginx/conf.d"
+  - "{{ nginx_consul_conf_dir }}/servers:/etc/nginx/servers"
+  - "{{ nginx_consul_conf_dir }}/includes:/etc/nginx/includes"
+  - "{{ nginx_consul_conf_dir }}/upstreams:/etc/nginx/upstreams"
+  - "{{ nginx_consul_conf_dir }}/templates:/etc/nginx/templates"
+  - "{{ nginx_consul_conf_dir }}/logs:/var/log/nginx"

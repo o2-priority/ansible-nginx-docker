@@ -1,0 +1,24 @@
+---
+
+- name: Check connection to consul backend
+  wait_for: host={{ nginx_consul_backend_host }} port={{ nginx_consul_backend_port }} timeout=60
+
+- name: Create nginx directories
+  file: path="{{ item }}" state=directory
+  with_items: "{{ nginx_consul_dirs }}"
+
+- name: Start nginx container
+  docker:
+    name:  nginx
+    image: nginx
+    state: running
+    ports: "{{ nginx_consul_ports }}"
+    volumes: "{{ nginx_consul_volumes }}"
+
+- name: Create nginx services config files
+  template: src=services.conf.j2 dest="{{ nginx_consul_conf_dir }}/conf.d/services.conf"
+  register: result
+
+- name: Restart nginx container
+  shell: docker kill -s HUP nginx
+  when: result|changed
