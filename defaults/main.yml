@@ -1,24 +1,40 @@
 ---
-nginx_consul_conf_dir: '/data/nginx'
+nginx_docker_conf_dir: '/data/nginx'
 
-nginx_consul_backend_host:
-nginx_consul_backend_port: 8500
+nginx_docker_consul_host:
+nginx_docker_consul_port: 8500
 
-nginx_consul_ports:
+nginx_docker_ports:
   - "80:80"
 
-nginx_consul_dirs:
-  - "{{ nginx_consul_conf_dir }}/logs"
-  - "{{ nginx_consul_conf_dir }}/conf.d"
-  - "{{ nginx_consul_conf_dir }}/servers"
-  - "{{ nginx_consul_conf_dir }}/includes"
-  - "{{ nginx_consul_conf_dir }}/upstreams"
-  - "{{ nginx_consul_conf_dir }}/templates"
+nginx_docker_dirs:
+  - "{{ nginx_docker_conf_dir }}/logs"
+  - "{{ nginx_docker_conf_dir }}/conf.d"
+  - "{{ nginx_docker_conf_dir }}/servers"
+  - "{{ nginx_docker_conf_dir }}/includes"
+  - "{{ nginx_docker_conf_dir }}/upstreams"
+  - "{{ nginx_docker_conf_dir }}/templates"
 
-nginx_consul_volumes:
-  - "{{ nginx_consul_conf_dir }}/conf.d:/etc/nginx/conf.d"
-  - "{{ nginx_consul_conf_dir }}/servers:/etc/nginx/servers"
-  - "{{ nginx_consul_conf_dir }}/includes:/etc/nginx/includes"
-  - "{{ nginx_consul_conf_dir }}/upstreams:/etc/nginx/upstreams"
-  - "{{ nginx_consul_conf_dir }}/templates:/etc/nginx/templates"
-  - "{{ nginx_consul_conf_dir }}/logs:/var/log/nginx"
+nginx_docker_volumes:
+  - "{{ nginx_docker_conf_dir }}/conf.d:/etc/nginx/conf.d"
+  - "{{ nginx_docker_conf_dir }}/servers:/etc/nginx/servers"
+  - "{{ nginx_docker_conf_dir }}/includes:/etc/nginx/includes"
+  - "{{ nginx_docker_conf_dir }}/upstreams:/etc/nginx/upstreams"
+  - "{{ nginx_docker_conf_dir }}/templates:/etc/nginx/templates"
+  - "{{ nginx_docker_conf_dir }}/logs:/var/log/nginx"
+
+nginx_docker_alias: ''
+nginx_docker_http_address: '/'
+nginx_docker_container_name:
+nginx_docker_service_name: "{{ nginx_docker_alias }}{{ nginx_docker_container_name }}"
+
+nginx_docker_server_host: "{{ ansible_default_ipv4.address }}"
+nginx_docker_conf_name: common
+
+nginx_docker_templates:
+  include:
+    conf:  "{{ nginx_docker_conf_dir }}/includes/{{ nginx_docker_conf_name }}/{{ nginx_docker_container_name }}.conf"
+    ctmpl: "{{ nginx_docker_conf_dir }}/templates/{{ nginx_docker_service_name }}-include.conf.ctmpl"
+  upstream:
+    conf:  "{{ nginx_docker_conf_dir }}/upstreams/{{ nginx_docker_service_name }}.conf"
+    ctmpl: "{{ nginx_docker_conf_dir }}/templates/{{ nginx_docker_service_name }}-upstream.conf.ctmpl"

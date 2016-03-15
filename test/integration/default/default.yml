@@ -1,6 +1,5 @@
 ---
-# Consul & Docker - Pre-requisites for testing this role
-- name: Install Consul and Docker
+- name: Consul-Docker play
   hosts: test-kitchen
 
   vars:
@@ -9,14 +8,37 @@
     consul_primary_node: localhost
     consul_nodes:
       - "{{ ansible_default_ipv4.address }}"
+
     registrator_service_registry_backend: consul
     registrator_service_registry_host: "{{ ansible_default_ipv4.address }}"
     registrator_service_registry_port: 8500
-    nginx_consul_backend_host: "{{ ansible_default_ipv4.address }}"
-    nginx_consul_backend_port: 8500
+
+    nginx_docker_consul_host: "{{ ansible_default_ipv4.address }}"
+    nginx_docker_consul_port: 8500
 
   roles:
     - wunzeco.consul
     - wunzeco.docker
     - wunzeco.registrator
+
+  post_tasks:
+    - name: Start jetty container
+      docker:
+        name: jettyapp
+        image: jetty
+        state: running
+        publish_all_ports: true
+        env:
+          SERVICE_NAME: jettyapp
+
+
+- name: Nginx-docker play
+  hosts: test-kitchen
+
+  vars:
+    nginx_docker_consul_host: "{{ ansible_default_ipv4.address }}"
+    nginx_docker_consul_port: 8500
+    nginx_docker_container_name: jettyapp
+
+  roles:
     - ansible-nginx-consul
