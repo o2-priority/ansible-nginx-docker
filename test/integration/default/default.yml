@@ -43,7 +43,7 @@
   roles:
     - { role: ansible-nginx-docker,
         nginx_docker_container_name: jenkins,
-        nginx_docker_http_location_prefix: '/manage',
+        nginx_docker_http_location_prefix: '/jenkins',
         nginx_docker_http_uri: '' }
 
 ## Note: nginx_docker_container_name must be same as SERVICE_NAME
