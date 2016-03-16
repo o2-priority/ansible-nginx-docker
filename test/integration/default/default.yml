@@ -20,16 +20,17 @@
     - wunzeco.consul
     - wunzeco.docker
     - wunzeco.registrator
+    - { role: wunzeco.consul-tools, consul_tools_name: consul-template, consul_tools_version: 0.12.1 }
 
   post_tasks:
-    - name: Start jetty container
+    - name: Start tomcat container
       docker:
-        name: jettyapp
-        image: jetty
+        name: jenkins
+        image: jenkins
         state: running
         publish_all_ports: true
         env:
-          SERVICE_NAME: jettyapp
+          SERVICE_NAME: jenkins
 
 
 - name: Nginx-docker play
@@ -38,7 +39,11 @@
   vars:
     nginx_docker_consul_host: "{{ ansible_default_ipv4.address }}"
     nginx_docker_consul_port: 8500
-    nginx_docker_container_name: jettyapp
 
   roles:
-    - ansible-nginx-consul
+    - { role: ansible-nginx-docker,
+        nginx_docker_container_name: jenkins,
+        nginx_docker_http_location_prefix: '/manage',
+        nginx_docker_http_uri: '' }
+
+## Note: nginx_docker_container_name must be same as SERVICE_NAME
