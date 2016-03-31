@@ -1,5 +1,5 @@
 server {
-    listen 80;
+    listen 80 default_server;
     server_name {{ nginx_docker_server_host }};
     include includes/{{ nginx_docker_conf_name }}/*.conf;
 }
