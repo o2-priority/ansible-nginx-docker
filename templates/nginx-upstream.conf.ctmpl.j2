@@ -1,7 +1,10 @@
-upstream {{ nginx_docker_alias }}{{ nginx_docker_container_name }} {
+{% raw %}{{{% endraw %}if service "{{ nginx_docker_service_name }}" "any" {% raw %}}}{% endraw %}
+
+upstream {{ nginx_docker_alias }}{{ nginx_docker_service_name }} {
     {% raw %}{{{% endraw %}range service "{{ nginx_docker_service_name }}" "any" {% raw %}}}{% endraw %}
 
     server {% raw %} {{.Address}}:{{.Port}};
     {{end}}{% endraw %}
 
 }
+{% raw %}{{{% endraw %}end{% raw %}}}{% endraw %}

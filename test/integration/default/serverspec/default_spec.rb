@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 nginx_docker_conf_dir = '/data/nginx'
+nginx_docker_service_name = 'jenkins-8080'
 
 %W(
   #{nginx_docker_conf_dir}
@@ -19,10 +20,10 @@ end
 %W(
   #{nginx_docker_conf_dir}/conf.d/services.conf
   #{nginx_docker_conf_dir}/servers/common.conf
-  #{nginx_docker_conf_dir}/templates/jenkins-include.conf.ctmpl
-  #{nginx_docker_conf_dir}/templates/jenkins-upstream.conf.ctmpl
-  #{nginx_docker_conf_dir}/includes/common/jenkins.conf
-  #{nginx_docker_conf_dir}/upstreams/jenkins.conf
+  #{nginx_docker_conf_dir}/templates/#{nginx_docker_service_name}-include.conf.ctmpl
+  #{nginx_docker_conf_dir}/templates/#{nginx_docker_service_name}-upstream.conf.ctmpl
+  #{nginx_docker_conf_dir}/includes/common/#{nginx_docker_service_name}.conf
+  #{nginx_docker_conf_dir}/upstreams/#{nginx_docker_service_name}.conf
 ).each do |f|
   describe file(f) do
     it { should be_file }
@@ -33,3 +34,7 @@ describe docker_container('nginx') do
   it { should be_running }
 end
 
+describe command('curl -s -o /dev/null -w "%{http_code}" http://10.0.2.15/jenkins/') do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match '200' }
+end

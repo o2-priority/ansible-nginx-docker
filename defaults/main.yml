@@ -34,7 +34,7 @@ nginx_docker_conf_name: common
 
 nginx_docker_templates:
   include:
-    conf:  "{{ nginx_docker_conf_dir }}/includes/{{ nginx_docker_conf_name }}/{{ nginx_docker_container_name }}.conf"
+    conf:  "{{ nginx_docker_conf_dir }}/includes/{{ nginx_docker_conf_name }}/{{ nginx_docker_service_name }}.conf"
     ctmpl: "{{ nginx_docker_conf_dir }}/templates/{{ nginx_docker_service_name }}-include.conf.ctmpl"
   upstream:
     conf:  "{{ nginx_docker_conf_dir }}/upstreams/{{ nginx_docker_service_name }}.conf"
