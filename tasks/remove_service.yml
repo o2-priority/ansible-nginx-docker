@@ -1,0 +1,15 @@
+---
+
+- name: Remove nginx config consul templates for service
+  file: path={{ item.value.ctmpl }} state=absent
+  with_dict: "{{ nginx_docker_templates }}"
+
+- name: Remove nginx config file for service
+  file: path={{ item.value.conf }} state=absent
+  with_dict: "{{ nginx_docker_templates }}"
+  register: config
+
+- name: Reload nginx docker container
+  shell: docker kill -s HUP nginx
+  when: config|changed
+  

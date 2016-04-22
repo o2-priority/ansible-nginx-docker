@@ -26,9 +26,10 @@ nginx_docker_volumes:
 nginx_docker_alias: ''
 nginx_docker_container_name:
 nginx_docker_container_port: ''
-nginx_docker_service_name: "{{ nginx_docker_alias }}{{ nginx_docker_container_name }}-{{ nginx_docker_container_port }}"
 nginx_docker_http_location_prefix: "/{{ nginx_docker_container_name }}"
 nginx_docker_http_uri: ''
+nginx_docker_service_name: "{{ nginx_docker_alias }}{{ nginx_docker_container_name }}-{{ nginx_docker_container_port }}"
+nginx_docker_remove_service: false
 
 nginx_docker_server_host: "{{ ansible_default_ipv4.address }}"
 nginx_docker_conf_name: common

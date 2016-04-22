@@ -23,7 +23,10 @@
   shell: docker kill -s HUP nginx
   when: result|changed
 
-- debug: var=nginx_docker_container_name
+- debug: msg="Container name & port - {{ nginx_docker_container_name }}:{{ nginx_docker_container_port }}"
 
-- include: services.yml
-  when: nginx_docker_container_name|default(false)
+- include: add_service.yml
+  when: nginx_docker_container_name|default(false) and not nginx_docker_remove_service
+
+- include: remove_service.yml
+  when: nginx_docker_remove_service

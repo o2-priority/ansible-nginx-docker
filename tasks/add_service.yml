@@ -23,7 +23,7 @@
     - include
     - upstream
 
-- name: Apply nginx-includes Consul templates are applied
+- name: Apply nginx consul templates to add nginx config for service
   shell: >
     consul-template \
       -consul "{{ nginx_docker_consul_host }}:{{ nginx_docker_consul_port }}" \
