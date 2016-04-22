@@ -25,7 +25,8 @@ nginx_docker_volumes:
 
 nginx_docker_alias: ''
 nginx_docker_container_name:
-nginx_docker_service_name: "{{ nginx_docker_alias }}{{ nginx_docker_container_name }}"
+nginx_docker_container_port: ''
+nginx_docker_service_name: "{{ nginx_docker_alias }}{{ nginx_docker_container_name }}-{{ nginx_docker_container_port }}"
 nginx_docker_http_location_prefix: "/{{ nginx_docker_container_name }}"
 nginx_docker_http_uri: ''
 

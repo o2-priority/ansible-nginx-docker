@@ -44,12 +44,12 @@
   roles:
     - { role: ansible-nginx-docker,
         nginx_docker_container_name: jenkins,
-        nginx_docker_service_name:   jenkins-8080,
+        nginx_docker_container_port: 8080,
         nginx_docker_http_location_prefix: '/jenkins',
         nginx_docker_http_uri: '' }
     - { role: ansible-nginx-docker,
         nginx_docker_container_name: jenkins,
-        nginx_docker_service_name:   jenkins-50000,
+        nginx_docker_container_port: 50000,
         nginx_docker_http_location_prefix: '/jenkins-agent',
         nginx_docker_http_uri: '' }
 
