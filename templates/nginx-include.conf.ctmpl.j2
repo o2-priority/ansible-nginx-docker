@@ -1,4 +1,6 @@
+{% raw %}{{{% endraw %}if service "{{ nginx_docker_service_name }}" "any" {% raw %}}}{% endraw %}
 location {{ nginx_docker_http_location_prefix }} {
   rewrite    {{ nginx_docker_http_location_prefix }}(.*)  $1 break;
   proxy_pass http://{{ nginx_docker_service_name }}{{ nginx_docker_http_uri }};
 }
+{% raw %}{{{% endraw %}end{% raw %}}}{% endraw %}
