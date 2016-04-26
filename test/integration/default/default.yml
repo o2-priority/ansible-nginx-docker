@@ -13,9 +13,6 @@
     registrator_service_registry_host: "{{ ansible_default_ipv4.address }}"
     registrator_service_registry_port: 8500
 
-    nginx_docker_consul_host: "{{ ansible_default_ipv4.address }}"
-    nginx_docker_consul_port: 8500
-
   roles:
     - wunzeco.consul
     - wunzeco.docker
