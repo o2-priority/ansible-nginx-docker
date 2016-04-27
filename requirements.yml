@@ -1,4 +1,4 @@
 - src: wunzeco.docker
 - src: wunzeco.consul
-- src: wunzeco.consul-tools
+- src: wunzeco.consul-template
 - src: wunzeco.registrator

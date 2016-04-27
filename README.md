@@ -2,27 +2,42 @@ nginx-docker
 ==================
 
 This role runs nginx container as a proxy for docker containers registered with
-Consul. 
-This role obtains service objects data registered with Consul for a given
-microservice/applicatoin and configures nginx docker container as a proxy for
-expose services.
+Consul. It uses consul-template to create nginx configs required to proxy 
+traffic to the containers. Consul-template obtains service objects data 
+registered on Consul for a given microservice/applicatoin and configures 
+nginx docker container as a proxy for it.
 
-In the context service object as explained in [Registrator] documentation, 
+In the context of service object as explained in [Registrator] documentation, 
 note that each listening port is considered a service.
 
 ## Assumptions
 
-This role assumes that:
+This role assumes that 
+- Docker Engine is installed locally
 - service discovery backend is Consul
 - services are registered on Consul using [Registrator]
+- consul-template is installed and running as a service.  You may choose to 
+  apply `wunzeco.consul-template` role to help with this but it is not enforced 
+  as a dependency of this role to allow you the flexibility of installing
+  consul-template by any means of your choosing.
 
 So it may help to familiarise yourself with Registrator, consul and consul-template.
 
 
 ## Example
 
-Configuring services exposed by a container e.g. jenkins docker container that
-listens on ports 8080 and 50000.
+Run nginx docker container only
+
+```
+- hosts: myhost
+
+  roles:
+    - wunzeco.nginx-docker
+```
+
+
+Configure nginx as proxy to `services` exposed by a container.
+e.g. jenkins docker container that listens on ports 8080 and 50000.
 
 ```
 - hosts: myhost

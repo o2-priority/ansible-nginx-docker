@@ -15,9 +15,10 @@
 
   roles:
     - wunzeco.consul
+    - wunzeco.consul-template
     - wunzeco.docker
     - wunzeco.registrator
-    - { role: wunzeco.consul-tools, consul_tools_name: consul-template, consul_tools_version: 0.12.1 }
+    - ansible-nginx-docker
 
   post_tasks:
     - name: Install curl

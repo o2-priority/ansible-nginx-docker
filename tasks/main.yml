@@ -1,8 +1,5 @@
 ---
 
-- name: Check connection to consul backend
-  wait_for: host={{ nginx_docker_consul_host }} port={{ nginx_docker_consul_port }} timeout=60
-
 - name: Create nginx directories
   file: path="{{ item }}" state=directory
   with_items: "{{ nginx_docker_dirs }}"
