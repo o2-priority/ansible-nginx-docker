@@ -32,9 +32,11 @@
         publish_all_ports: true
         env:
           SERVICE_NAME: jenkins
+      register: j
 
     - name: Delay a few seconds to allow jenkins container start
       pause: seconds=10
+      when: j|changed
 
 
 - name: Nginx-docker play
