@@ -72,4 +72,4 @@ pair are unique.
 ## Dependencies
 none
 
-[Registrator]: (http://gliderlabs.com/registrator/latest/
+[Registrator]: http://gliderlabs.com/registrator/latest/
