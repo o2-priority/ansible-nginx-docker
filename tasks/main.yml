@@ -8,9 +8,10 @@
   docker:
     name:  nginx
     image: nginx
-    state: running
+    state: started
     ports: "{{ nginx_docker_ports }}"
     volumes: "{{ nginx_docker_volumes }}"
+    restart_policy: "unless-stopped"
 
 - name: Create nginx services config files
   template: src=services.conf.j2 dest="{{ nginx_docker_conf_dir }}/conf.d/services.conf"
