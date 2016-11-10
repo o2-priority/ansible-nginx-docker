@@ -23,6 +23,11 @@
   post_tasks:
     - name: Install curl
       apt: name=curl state=present
+      when: ansible_os_family|lower == 'debian'
+
+    - name: Install curl
+      yum: name=curl state=present
+      when: ansible_os_family|lower == 'redhat'
 
     - name: Start jenkins container
       docker:

@@ -22,4 +22,6 @@
       -consul "{{ nginx_docker_consul_host }}:{{ nginx_docker_consul_port }}" \
       -template "{{ item.value.ctmpl }}:{{ item.value.conf }}:docker kill -s HUP nginx" \
       -once
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/bin"
   with_dict: "{{ nginx_docker_templates }}"

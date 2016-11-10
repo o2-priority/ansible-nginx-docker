@@ -69,6 +69,16 @@ pair are unique.
 >    container listens on multiple ports, it has multiple services.
 >    (source: http://gliderlabs.com/registrator/latest/user/services/)
 
+
+## Testing
+
+To test this role:
+
+```
+kitchen test
+```
+
+
 ## Dependencies
 none
 
