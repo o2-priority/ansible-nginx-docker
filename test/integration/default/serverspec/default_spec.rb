@@ -42,6 +42,10 @@ end
   end
 end
 
+describe file('/etc/logrotate.d/nginx-docker') do
+  it { should be_file }
+end
+
 describe docker_container('nginx') do
   it { should be_running }
 end

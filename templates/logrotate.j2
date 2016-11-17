@@ -1,0 +1,8 @@
+{{ nginx_docker_conf_dir }}/logs/*.log {
+    weekly
+    rotate 5
+    missingok
+    dateext
+    copytruncate
+    compress
+}

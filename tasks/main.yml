@@ -21,6 +21,12 @@
   shell: docker kill -s HUP nginx
   when: result|changed
 
+- name: Create nginx logrotate config
+  template:
+    src:   logrotate.j2
+    dest:  /etc/logrotate.d/nginx-docker
+    mode:  0644
+
 - debug: msg="Container name & port - {{ nginx_docker_container_name }}:{{ nginx_docker_container_port }}"
 
 - name: Add nginx config for service
