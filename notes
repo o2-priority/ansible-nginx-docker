@@ -1,0 +1,8 @@
+Caching
+    * https://www.nginx.com/blog/nginx-caching-guide/
+
+Debugging HTTP Headers (e.g. if Cache-Control header is seen by nginx)
+    *  command:
+          sudo tcpdump -n -S -s 0 -A 'tcp dst port 80' | grep -B3 -A25 "GET "
+    *  This command lets you dump HTTP requests for debugging. It is useful 
+       for say seeing HTTP Request Headers on Nginx

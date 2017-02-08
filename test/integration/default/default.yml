@@ -30,11 +30,13 @@
       when: ansible_os_family|lower == 'redhat'
 
     - name: Start jenkins container
-      docker:
+      docker_container:
         name:  jenkins
         image: "jenkins:1.651.1"
-        state: running
-        publish_all_ports: true
+        state: started
+        published_ports:
+          - 8080:8080
+          - 50000:50000
         env:
           SERVICE_NAME: jenkins
       register: j
@@ -50,6 +52,12 @@
   vars:
     nginx_docker_consul_host: "{{ ansible_default_ipv4.address }}"
     nginx_docker_consul_port: 8500
+    nginx_docker_proxy_cache_enable: true
+    nginx_docker_proxy_cache_directives:
+      - "proxy_cache_revalidate on;"
+      - "proxy_cache_min_uses 3;"
+      - "proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;"
+      - "proxy_cache_lock on;"
 
   roles:
     - { role: ansible-nginx-docker,
