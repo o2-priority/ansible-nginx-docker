@@ -5,7 +5,7 @@
   with_items: "{{ nginx_docker_dirs }}"
 
 - name: Start nginx container
-  docker:
+  docker_container:
     name:  nginx
     image: nginx
     state: started
