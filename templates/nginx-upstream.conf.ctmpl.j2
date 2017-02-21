@@ -5,6 +5,7 @@ upstream {{ nginx_docker_alias }}{{ nginx_docker_service_name }} {
 
     server {% raw %} {{.Address}}:{{.Port}};
     {{end}}{% endraw %}
+
     keepalive 16;
 }
 {% raw %}{{{% endraw %}else{% raw %}}}{% endraw %}
