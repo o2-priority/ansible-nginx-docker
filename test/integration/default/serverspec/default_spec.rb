@@ -19,6 +19,7 @@ nginx_docker_service_name_remove = 'jenkins-50000'
 end
 
 %W(
+  #{nginx_docker_conf_dir}/nginx.conf
   #{nginx_docker_conf_dir}/conf.d/services.conf
   #{nginx_docker_conf_dir}/servers/common.conf
   #{nginx_docker_conf_dir}/templates/#{nginx_docker_service_name_add}-include.conf.ctmpl
