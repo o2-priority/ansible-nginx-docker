@@ -4,6 +4,17 @@
   file: path="{{ item }}" state=directory
   with_items: "{{ nginx_docker_dirs }}"
 
+- name: Create nginx.conf
+  template: src=nginx.conf.j2 dest="{{ nginx_docker_conf_dir }}/nginx.conf"
+  register: nginx_cnf
+
+- name: Stop nginx container
+  docker_container:
+    name:  nginx
+    image: nginx
+    state: stopped
+  when: nginx_cnf|changed
+
 - name: Start nginx container
   docker_container:
     name:  nginx
@@ -15,11 +26,11 @@
 
 - name: Create nginx services config files
   template: src=services.conf.j2 dest="{{ nginx_docker_conf_dir }}/conf.d/services.conf"
-  register: result
+  register: svc_cnf
 
-- name: Restart nginx container
+- name: Reload nginx config
   shell: docker kill -s HUP nginx
-  when: result|changed
+  when: svc_cnf|changed
 
 - name: Create nginx logrotate config
   template:

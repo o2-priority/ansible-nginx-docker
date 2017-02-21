@@ -12,6 +12,8 @@
     registrator_service_registry_backend: consul
     registrator_service_registry_host: "{{ ansible_default_ipv4.address }}"
     registrator_service_registry_port: 8500
+    nginx_docker_keepalive_timeout: 30
+    nginx_docker_gzip_enable: true
 
   roles:
     - wunzeco.consul
@@ -39,6 +41,7 @@
           - 50000:50000
         env:
           SERVICE_NAME: jenkins
+          SERVICE_TAGS: "version=1.651.1"
       register: j
 
     - name: Delay a few seconds to allow jenkins container start
@@ -55,9 +58,10 @@
     nginx_docker_proxy_cache_enable: true
     nginx_docker_proxy_cache_directives:
       - "proxy_cache_revalidate on;"
-      - "proxy_cache_min_uses 3;"
       - "proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;"
       - "proxy_cache_lock on;"
+    nginx_docker_keepalive_timeout: 30
+    nginx_docker_gzip_enable: true
 
   roles:
     - { role: ansible-nginx-docker,
