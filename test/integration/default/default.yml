@@ -8,12 +8,12 @@
     consul_primary_node: localhost
     consul_nodes:
       - "{{ ansible_default_ipv4.address }}"
-
     registrator_service_registry_backend: consul
     registrator_service_registry_host: "{{ ansible_default_ipv4.address }}"
     registrator_service_registry_port: 8500
     nginx_docker_keepalive_timeout: 30
     nginx_docker_gzip_enable: true
+    nginx_docker_proxy_cache_path_enable: true
 
   roles:
     - wunzeco.consul
@@ -55,8 +55,10 @@
   vars:
     nginx_docker_consul_host: "{{ ansible_default_ipv4.address }}"
     nginx_docker_consul_port: 8500
-    nginx_docker_proxy_cache_enable: true
-    nginx_docker_proxy_cache_directives:
+
+    nginx_docker_proxy_cache_path_enable: true
+    nginx_docker_location_proxy_cache_enable: true
+    nginx_docker_location_proxy_cache_directives:
       - "proxy_cache_revalidate on;"
       - "proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;"
       - "proxy_cache_lock on;"

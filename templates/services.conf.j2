@@ -1,4 +1,4 @@
-{% if nginx_docker_proxy_cache_enable|bool %}
+{% if nginx_docker_proxy_cache_path_enable|bool %}
 proxy_cache_path /var/lib/nginx/cache levels=1:2 keys_zone=svc_cache:10m max_size=1g
                  inactive=30m use_temp_path=off;
 

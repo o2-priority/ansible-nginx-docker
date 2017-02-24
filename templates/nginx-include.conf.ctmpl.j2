@@ -3,10 +3,10 @@
 location {{ nginx_docker_http_location_prefix }} {
   rewrite    {{ nginx_docker_http_location_prefix }}(.*)  {{ nginx_docker_http_uri }}$1 break;
 
-{% if nginx_docker_proxy_cache_enable|bool %}
+{% if nginx_docker_proxy_cache_path_enable|bool and nginx_docker_location_proxy_cache_enable|bool %}
   # Enable Caching
   proxy_cache svc_cache;
-{% for directive in nginx_docker_proxy_cache_directives %}
+{% for directive in nginx_docker_location_proxy_cache_directives %}
 {% if not 'proxy_cache' in directive.split(' ') %}
   {{ directive }}
 {% endif %}
