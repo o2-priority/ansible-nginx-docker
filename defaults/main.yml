@@ -20,13 +20,13 @@ nginx_docker_dirs:
   - "{{ nginx_docker_conf_dir }}/templates"
 
 nginx_docker_volumes:
-  - "{{ nginx_docker_conf_dir }}/conf.d:/etc/nginx/conf.d"
-  - "{{ nginx_docker_conf_dir }}/servers:/etc/nginx/servers"
-  - "{{ nginx_docker_conf_dir }}/includes:/etc/nginx/includes"
-  - "{{ nginx_docker_conf_dir }}/upstreams:/etc/nginx/upstreams"
-  - "{{ nginx_docker_conf_dir }}/templates:/etc/nginx/templates"
+  - "{{ nginx_docker_conf_dir }}/conf.d:/etc/nginx/conf.d:rw"
+  - "{{ nginx_docker_conf_dir }}/servers:/etc/nginx/servers:rw"
+  - "{{ nginx_docker_conf_dir }}/includes:/etc/nginx/includes:rw"
+  - "{{ nginx_docker_conf_dir }}/upstreams:/etc/nginx/upstreams:rw"
+  - "{{ nginx_docker_conf_dir }}/templates:/etc/nginx/templates:rw"
+  - "{{ nginx_docker_conf_dir }}/nginx.conf:/etc/nginx/nginx.conf:rw"
   - "{{ nginx_docker_conf_dir }}/logs:/var/log/nginx"
-  - "{{ nginx_docker_conf_dir }}/nginx.conf:/etc/nginx/nginx.conf"
   - "/var/lib/nginx/cache"                        # For nginx caching
 
 nginx_docker_alias: ''
