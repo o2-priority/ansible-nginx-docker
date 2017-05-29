@@ -1,6 +1,7 @@
 {{ nginx_docker_conf_dir }}/logs/*.log {
     weekly
     rotate 5
+    maxsize 500M
     missingok
     dateext
     copytruncate
