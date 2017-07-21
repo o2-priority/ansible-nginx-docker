@@ -16,10 +16,24 @@
     - include
     - upstream
 
+- name: Check version of consul-template
+  command: consul-template -v
+  register: ct
+
+#- debug: var=ct
+#- debug: msg="{{ ct.stderr.split(' ')[1]|version_compare('v0.16.0', '<=') }}"
+
+- name: Set consul-template consul agent address flag
+  set_fact:
+    _consul_addr_flag: "-consul"
+  when: ct.stderr.split(" ")[1]|version_compare('v0.16.0', '<=')
+
+#- debug: msg="{{ _consul_addr_flag|default('-consul-addr') }}"
+
 - name: Render consul-template templates of nginx include and upstream config for service
   shell: >
     consul-template \
-      -consul "{{ nginx_docker_consul_host }}:{{ nginx_docker_consul_port }}" \
+      {{ _consul_addr_flag|default('-consul-addr') }} "{{ nginx_docker_consul_host }}:{{ nginx_docker_consul_port }}" \
       -template "{{ item.value.ctmpl }}:{{ item.value.conf }}:docker kill -s HUP nginx" \
       -once
   environment:
