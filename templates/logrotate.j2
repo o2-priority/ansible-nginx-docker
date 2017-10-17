@@ -1,9 +1,15 @@
 {{ nginx_docker_conf_dir }}/logs/*.log {
     weekly
     rotate 5
-    maxsize 500M
     missingok
+    maxsize 500M
+    notifempty
     dateext
-    copytruncate
+    sharedscripts
     compress
+    postrotate
+        if [ "$(docker ps -q --filter=name=nginx)" != '' ]; then
+            docker kill -s HUP nginx
+        fi
+    endscript
 }
