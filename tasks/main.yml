@@ -41,9 +41,9 @@
 - debug: msg="Container name & port - {{ nginx_docker_container_name }}:{{ nginx_docker_container_port }}"
 
 - name: Add nginx config for service
-  include: add_service.yml
+  include_tasks: add_service.yml
   when: nginx_docker_container_name|default(false) and not nginx_docker_remove_service
 
 - name: Remove nginx config for service
-  include: remove_service.yml
+  include_tasks: remove_service.yml
   when: nginx_docker_remove_service
