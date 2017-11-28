@@ -1,8 +1,8 @@
 {{ nginx_docker_conf_dir }}/logs/*.log {
-    weekly
-    rotate 5
+    {{ nginx_docker_logrotate_frequency|default('weekly') }}
+    rotate {{ nginx_docker_logrotate_rotate|default(5) }}
     missingok
-    maxsize 500M
+    maxsize {{ nginx_docker_logrotate_maxsize|default('500M') }}
     notifempty
     sharedscripts
     compress
