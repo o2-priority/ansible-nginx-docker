@@ -31,6 +31,9 @@ Run nginx docker container only
 ```
 - hosts: myhost
 
+  vars:
+    nginx_docker_custom_log_fields: [ realip_remote_addr, http_x_customheader ] # if custom logging is required
+
   roles:
     - wunzeco.nginx-docker
 ```
