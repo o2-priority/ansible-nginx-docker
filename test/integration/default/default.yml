@@ -14,6 +14,8 @@
     nginx_docker_keepalive_timeout: 30
     nginx_docker_gzip_enable: true
     nginx_docker_proxy_cache_path_enable: true
+    nginx_docker_custom_log_fields: [ realip_remote_addr, http_x_customheader ]
+    nginx_docker_json_log_format_enable: true
 
   roles:
     - wunzeco.consul
@@ -64,6 +66,8 @@
       - "proxy_cache_lock on;"
     nginx_docker_keepalive_timeout: 30
     nginx_docker_gzip_enable: true
+    nginx_docker_custom_log_fields: [ realip_remote_addr, http_x_customheader ]
+    nginx_docker_json_log_format_enable: true
 
   roles:
     - { role: ansible-nginx-docker,
