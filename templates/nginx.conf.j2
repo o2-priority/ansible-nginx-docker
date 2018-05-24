@@ -2,7 +2,7 @@
 user  nginx;
 worker_processes  {{ nginx_docker_worker_processes|default('auto') }};
 
-error_log  /var/log/nginx/error.log warn;
+error_log  {{ nginx_docker_error_log }} {{ nginx_docker_error_log_level }};
 pid        /var/run/nginx.pid;
 
 
@@ -21,19 +21,23 @@ http {
                       '"$http_user_agent" "$http_x_forwarded_for"';
 
 {% if nginx_docker_json_log_format_enable|bool|default(false) %}
+{% set _log_format_name = ' custom_json' %}
 {% include 'nginx-json-log-format.j2' %}
-
-    access_log  /var/log/nginx/access.log  custom_json;
 {% elif nginx_docker_custom_log_fields|default([]) %}
+{% set _log_format_name = ' custom' %}
     log_format  custom  '$remote_addr - $remote_user [$time_local] "$request" '
                         '$status $body_bytes_sent "$http_referer" '
                         '"$http_user_agent" "$http_x_forwarded_for" '
                         '${{ nginx_docker_custom_log_fields|join(" $") }}';
-
-    access_log  /var/log/nginx/access.log  custom;
 {% else %}
-    access_log  /var/log/nginx/access.log  main;
+{% set _log_format_name = ' main' %}
 {% endif %}
+{# Override _log_format_name set above if access_log is 'off' #}
+{% if nginx_docker_access_log|string|lower == 'off' %}
+{% set _log_format_name = '' %}
+{% endif %}
+
+    access_log  {{ nginx_docker_access_log }}{{ _log_format_name }};
 
     sendfile        on;
     #tcp_nopush     on;

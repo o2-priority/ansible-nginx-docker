@@ -16,6 +16,7 @@
     nginx_docker_proxy_cache_path_enable: true
     nginx_docker_custom_log_fields: [ realip_remote_addr, http_x_customheader ]
     nginx_docker_json_log_format_enable: true
+    #nginx_docker_access_log: 'off'
 
   roles:
     - wunzeco.consul
@@ -46,9 +47,8 @@
           SERVICE_TAGS: "version=1.651.1"
       register: j
 
-    - name: Delay a few seconds to allow jenkins container start
-      pause: seconds=10
-      when: j|changed
+    - name: Wait for jenkins port 8080
+      wait_for: port=8080
 
 
 - name: Nginx-docker play
@@ -68,6 +68,7 @@
     nginx_docker_gzip_enable: true
     nginx_docker_custom_log_fields: [ realip_remote_addr, http_x_customheader ]
     nginx_docker_json_log_format_enable: true
+    #nginx_docker_access_log: 'off'
 
   roles:
     - { role: ansible-nginx-docker,
