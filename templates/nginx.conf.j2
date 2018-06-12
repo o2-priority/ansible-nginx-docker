@@ -53,9 +53,9 @@ http {
     gzip_disable "MSIE [1-6]\.";
     gzip_types text/plain text/css text/js application/json text/xml application/xml;
 
-{% endif -%}
+{% endif %}
 
-    client_max_body_size {{ nginx_docker_client_max_body_size }}
+    client_max_body_size {{ nginx_docker_client_max_body_size }};
 
     include /etc/nginx/conf.d/*.conf;
 }
