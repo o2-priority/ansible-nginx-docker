@@ -65,4 +65,4 @@ nginx_docker_custom_log_fields: []          # can be any nginx variable e.g. rea
 nginx_docker_json_log_format_enable: false
 
 # Client request configuration parameters
-nginx_docker_client_max_body_size: 15M
+nginx_docker_client_max_body_size: 1M
