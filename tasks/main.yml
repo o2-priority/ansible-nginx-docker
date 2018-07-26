@@ -5,7 +5,9 @@
   with_items: "{{ nginx_docker_dirs }}"
 
 - name: Create nginx.conf
-  template: src=nginx.conf.j2 dest="{{ nginx_docker_conf_dir }}/nginx.conf"
+  template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_docker_conf_dir }}/nginx.conf"
   register: nginx_cnf
 
 - name: Stop nginx container
@@ -13,7 +15,7 @@
     name:  nginx
     image: nginx
     state: stopped
-  when: nginx_cnf|changed
+  when: nginx_cnf is changed
 
 - name: Start nginx container
   docker_container:
@@ -30,7 +32,7 @@
 
 - name: Reload nginx config
   shell: docker kill -s HUP nginx
-  when: svc_cnf|changed
+  when: svc_cnf is changed
 
 - name: Create nginx logrotate config
   template:
@@ -41,9 +43,9 @@
 - debug: msg="Container name & port - {{ nginx_docker_container_name }}:{{ nginx_docker_container_port }}"
 
 - name: Add nginx config for service
-  include: add_service.yml
+  include_tasks: add_service.yml
   when: nginx_docker_container_name|default(false) and not nginx_docker_remove_service
 
 - name: Remove nginx config for service
-  include: remove_service.yml
+  include_tasks: remove_service.yml
   when: nginx_docker_remove_service

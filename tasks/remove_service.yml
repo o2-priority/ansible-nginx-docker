@@ -11,5 +11,5 @@
 
 - name: Reload nginx docker container
   shell: docker kill -s HUP nginx
-  when: config|changed
-  
+  when: config is changed
+
