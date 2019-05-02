@@ -2,6 +2,8 @@ server {
     listen 80 default_server;
     server_name {{ nginx_docker_server_host }};
 
+    client_header_buffer_size 4k;
+
     location /nginx_status {
         stub_status on;
         allow 127.0.0.1;

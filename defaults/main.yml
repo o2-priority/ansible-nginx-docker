@@ -68,3 +68,4 @@ nginx_docker_json_log_format_enable: false
 nginx_docker_client_max_body_size: 1M
 
 nginx_docker_proxy_buffer_size: 4k
+nginx_docker_proxy_buffers: 8 4k

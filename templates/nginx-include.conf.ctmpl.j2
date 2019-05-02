@@ -25,6 +25,7 @@ location {{ nginx_docker_http_location_prefix }} {
   proxy_set_header Host $host;
 
   proxy_buffer_size {{ nginx_docker_proxy_buffer_size }};
+  proxy_buffers {{ nginx_docker_proxy_buffers }};
 }
 {% raw %}{{{% endraw %}else{% raw %}}}{% endraw %}
 
