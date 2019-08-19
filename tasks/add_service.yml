@@ -5,12 +5,12 @@
 
 - name: Create nginx servers config
   template: 
-    src:  "nginx-server.conf.j2"
+    src:  nginx-server.conf.j2 
     dest: "{{ nginx_docker_conf_dir }}/servers/{{ nginx_docker_conf_name }}.conf"
 
 - name: Create consul-template templates of nginx include and upstream config for service
   template:
-    src:  "nginx-{{ item }}.conf.ctmpl.j2"
+    src:  nginx-{{ item }}.conf.ctmpl.j2
     dest: "{{ nginx_docker_templates[item].ctmpl }}"
   with_items:
     - include
