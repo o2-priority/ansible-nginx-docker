@@ -17,7 +17,7 @@
     - upstream
 
 - name: Check version of consul-template
-  command: consul-template -v
+  command: /usr/local/bin/consul-template -v
   register: ct
 
 #- debug: var=ct
@@ -32,7 +32,7 @@
 
 - name: Render consul-template templates of nginx include and upstream config for service
   shell: >
-    consul-template \
+    /usr/local/bin/consul-template \
       {{ _consul_addr_flag|default('-consul-addr') }} "{{ nginx_docker_consul_host }}:{{ nginx_docker_consul_port }}" \
       -template "{{ item.value.ctmpl }}:{{ item.value.conf }}:docker kill -s HUP nginx" \
       -once
