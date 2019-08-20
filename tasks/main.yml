@@ -1,5 +1,7 @@
 ---
 
+- include_vars: "{{ ansible_os_family|lower }}.yml"
+
 - name: Create nginx directories
   file: path="{{ item }}" state=directory
   with_items: "{{ nginx_docker_dirs }}"
@@ -49,3 +51,6 @@
 - name: Remove nginx config for service
   include_tasks: remove_service.yml
   when: nginx_docker_remove_service
+
+- include_tasks: firewalld.yml
+  when: configure_firewall
