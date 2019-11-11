@@ -41,6 +41,7 @@ http {
 
     sendfile        on;
     #tcp_nopush     on;
+    server_tokens   off;
 
     keepalive_timeout  {{ nginx_docker_keepalive_timeout|default(65) }};
 
