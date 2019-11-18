@@ -42,6 +42,16 @@
     dest:  /etc/logrotate.d/nginx-docker
     mode:  0644
 
+- name: Set SELinux context for log files for logrotate
+  sefcontext:
+    ftype: a
+    target: "{{ nginx_docker_conf_dir }}/logs(/.*)?"
+    setype: var_log_t
+    state: present
+
+- name: Apply new SELinux file context to filesystem
+  command: "restorecon -irv {{ nginx_docker_conf_dir }}/logs"
+
 - debug: msg="Container name & port - {{ nginx_docker_container_name }}:{{ nginx_docker_container_port }}"
 
 - name: Add nginx config for service
