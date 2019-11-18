@@ -46,7 +46,7 @@
   sefcontext:
     ftype: a
     target: "{{ nginx_docker_conf_dir }}/logs(/.*)?"
-    setype: var_log_t
+    setype: httpd_log_t
     state: present
 
 - name: Apply new SELinux file context to filesystem
