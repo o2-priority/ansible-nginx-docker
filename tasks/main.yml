@@ -50,7 +50,7 @@
     state: present
 
 - name: Apply new SELinux file context to filesystem
-  command: "restorecon -irv {{ nginx_docker_conf_dir }}/logs"
+  command: "restorecon -rv {{ nginx_docker_conf_dir }}/logs"
 
 - debug: msg="Container name & port - {{ nginx_docker_container_name }}:{{ nginx_docker_container_port }}"
 
