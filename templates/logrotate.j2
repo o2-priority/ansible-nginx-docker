@@ -3,9 +3,11 @@
     rotate {{ nginx_docker_logrotate_rotate|default(5) }}
     missingok
     maxsize {{ nginx_docker_logrotate_maxsize|default('500M') }}
+    nodateext
     notifempty
     sharedscripts
     compress
+    delaycompress
     postrotate
         if [ "$(docker ps -q --filter=name=nginx)" != '' ]; then
             docker kill -s HUP nginx
