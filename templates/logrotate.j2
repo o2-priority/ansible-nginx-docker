@@ -9,8 +9,7 @@
     compress
     delaycompress
     postrotate
-        if [ "$(docker ps -q --filter=name=nginx)" != '' ]; then
-            docker kill -s HUP nginx
-        fi
+        /bin/logger -t logrotate "nginx-docker postrotate"
+        docker kill -s HUP nginx
     endscript
 }
