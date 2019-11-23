@@ -42,6 +42,9 @@
     dest:  /etc/logrotate.d/nginx-docker
     mode:  0644
 
+- name: Set logrotate to permissive
+  shell: semanage permissive -a logrotate_t
+
 #TODO: remove once applied to all env
 - name: Remove SELinux context for log files
   sefcontext:
