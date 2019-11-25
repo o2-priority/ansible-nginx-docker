@@ -1,0 +1,28 @@
+---
+- name: Set logrotate to permissive
+  shell: semanage permissive -a logrotate_t
+
+#TODO: remove once applied to all env
+- name: Remove SELinux context for log files
+  sefcontext:
+    ftype: a
+    target: "{{ nginx_docker_conf_dir }}/logs(/.*)?"
+    setype: httpd_log_t
+    state: absent
+
+- name: Set SELinux context nginx dir
+  sefcontext:
+    ftype: a
+    target: "{{ nginx_docker_conf_dir }}(/.*)?"
+    setype: httpd_config_t
+    state: present
+
+- name: Set SELinux context for log files
+  sefcontext:
+    ftype: a
+    target: "{{ nginx_docker_conf_dir }}/logs(/.*)?"
+    setype: httpd_log_t
+    state: present
+
+- name: Apply new SELinux file context to filesystem
+  command: "restorecon -rv {{ nginx_docker_conf_dir }}"
