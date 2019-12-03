@@ -1,4 +1,9 @@
 ---
+- name: Start firewalld
+  systemd:
+    name: firewalld
+    enabled: yes
+    state: started
 
 - name: Check firewalld configuration
   shell: firewall-cmd --list-ports
