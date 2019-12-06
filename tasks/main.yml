@@ -42,6 +42,14 @@
     dest:  /etc/logrotate.d/nginx-docker
     mode:  0644
 
+- name: Update logrotate cron script
+  template:
+    src:  cron.logrotate.j2
+    dest: /etc/cron.daily/logrotate
+    owner: root
+    group: root
+    mode: 0700
+
 - include_tasks: selinux.yml
   when: ansible_os_family|lower == 'redhat'
 
