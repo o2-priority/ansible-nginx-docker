@@ -57,6 +57,7 @@ http {
 {% endif %}
 
     client_max_body_size {{ nginx_docker_client_max_body_size }};
+    large_client_header_buffers {{ nginx_docker_large_client_header_buffers }};
 
     include /etc/nginx/conf.d/*.conf;
 }

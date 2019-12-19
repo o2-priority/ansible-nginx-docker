@@ -66,5 +66,6 @@ nginx_docker_json_log_format_enable: false
 
 # Client request configuration parameters
 nginx_docker_client_max_body_size: 1M
+nginx_docker_large_client_header_buffers: 4 8k
 
 nginx_docker_proxy_buffer_size: 4k
