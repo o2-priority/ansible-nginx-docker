@@ -1,4 +1,4 @@
-require 'spec_helper'
+require '/tmp/kitchen/spec/spec_helper.rb'
 
 nginx_docker_conf_dir = '/data/nginx'
 nginx_docker_service_name_add = 'jenkins-8080'
@@ -58,4 +58,9 @@ end
 describe command('curl -s -o /dev/null -w "%{http_code}" http://10.0.2.15/jenkins/') do
   its(:exit_status) { should eq 0 }
   its(:stdout) { should match '200' }
+end
+
+describe file("#{nginx_docker_conf_dir}/includes/common/#{nginx_docker_service_name_add}.conf") do
+  it { should be_file }
+  its(:content) { should match /client_max_body_size 42M;/ }
 end

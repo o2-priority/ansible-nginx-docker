@@ -25,6 +25,11 @@ location {{ nginx_docker_http_location_prefix }} {
   proxy_set_header Host $host;
 
   proxy_buffer_size {{ nginx_docker_proxy_buffer_size }};
+
+  {% if nginx_docker_service_client_max_body_size is not none %}
+  client_max_body_size {{ nginx_docker_service_client_max_body_size }};
+  {% endif %}
+
 }
 {% raw %}{{{% endraw %}else{% raw %}}}{% endraw %}
 
