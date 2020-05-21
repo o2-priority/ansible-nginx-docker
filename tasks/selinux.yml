@@ -1,7 +1,4 @@
 ---
-- name: Set logrotate to permissive
-  shell: semanage permissive -a logrotate_t
-
 - name: Set SELinux context nginx dir
   sefcontext:
     ftype: a
