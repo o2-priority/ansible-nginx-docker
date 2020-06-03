@@ -1,5 +1,5 @@
 server {
-    listen 80 default_server;
+    listen 80 default_server reuseport;
     server_name {{ nginx_docker_server_host }};
 
     location /nginx_status {

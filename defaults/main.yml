@@ -50,6 +50,7 @@ nginx_docker_templates:
 
 nginx_docker_worker_processes: auto
 nginx_docker_worker_connections: 8192
+nginx_docker_worker_rlimit_nofile: 16384 # 2*worker_connections
 nginx_docker_keepalive_timeout: 65
 nginx_docker_gzip_enable: false
 

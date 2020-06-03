@@ -1,6 +1,7 @@
 
 user  nginx;
 worker_processes  {{ nginx_docker_worker_processes|default('auto') }};
+worker_rlimit_nofile  {{ nginx_docker_worker_rlimit_nofile }};
 
 error_log  {{ nginx_docker_error_log }} {{ nginx_docker_error_log_level }};
 pid        /var/run/nginx.pid;
@@ -8,7 +9,8 @@ pid        /var/run/nginx.pid;
 
 events {
     worker_connections  {{ nginx_docker_worker_connections }};
-    #multi_accept on;
+    multi_accept on;
+    use epoll;
 }
 
 
@@ -36,12 +38,15 @@ http {
 {% if nginx_docker_access_log|string|lower == 'off' %}
 {% set _log_format_name = '' %}
 {% endif %}
-
     access_log  {{ nginx_docker_access_log }}{{ _log_format_name }};
 
     sendfile        on;
-    #tcp_nopush     on;
+    tcp_nopush      on;
+    tcp_nodelay     on;
     server_tokens   off;
+
+    server_names_hash_bucket_size  64;
+    types_hash_max_size 2048;
 
     keepalive_timeout  {{ nginx_docker_keepalive_timeout|default(65) }};
 
@@ -57,6 +62,12 @@ http {
 {% endif %}
 
     client_max_body_size {{ nginx_docker_client_max_body_size }};
+    client_body_buffer_size 16k;
+    client_header_buffer_size 16k;
+
+    proxy_buffer_size 8k;
+    proxy_buffers 8 8k;
+    proxy_busy_buffers_size 8k;
 
     include /etc/nginx/conf.d/*.conf;
 }
