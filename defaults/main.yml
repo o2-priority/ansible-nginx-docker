@@ -70,3 +70,5 @@ nginx_docker_client_max_body_size: 1M
 nginx_docker_service_client_max_body_size:
 
 nginx_docker_proxy_buffer_size: 4k
+
+nginx_docker_image: nginx:1.17.5

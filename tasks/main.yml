@@ -15,15 +15,15 @@
 - name: Stop nginx container
   docker_container:
     name:  nginx
-    image: nginx
     state: stopped
   when: nginx_cnf is changed
 
 - name: Start nginx container
   docker_container:
     name:  nginx
-    image: nginx
+    image: "{{ nginx_docker_image }}"
     state: started
+    privileged: yes
     ports: "{{ nginx_docker_ports }}"
     volumes: "{{ nginx_docker_volumes }}"
     restart_policy: "unless-stopped"
