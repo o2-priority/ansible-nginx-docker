@@ -15,7 +15,7 @@
 - name: Stop nginx container
   docker_container:
     name:  nginx
-    ignore_image: yes
+    image: "{{ nginx_docker_image }}"
     state: stopped
   when: nginx_cnf is changed
 
