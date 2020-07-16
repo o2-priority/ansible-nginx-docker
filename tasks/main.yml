@@ -11,31 +11,12 @@
     src: nginx.conf.j2
     dest: "{{ nginx_docker_conf_dir }}/nginx.conf"
   register: nginx_cnf
-
-- name: Stop nginx container
-  docker_container:
-    name:  nginx
-    image: "{{ nginx_docker_image }}"
-    state: stopped
-  when: nginx_cnf is changed
-
-- name: Start nginx container
-  docker_container:
-    name:  nginx
-    image: "{{ nginx_docker_image }}"
-    state: started
-    privileged: yes
-    ports: "{{ nginx_docker_ports }}"
-    volumes: "{{ nginx_docker_volumes }}"
-    restart_policy: "unless-stopped"
+  notify: Restart nginx
 
 - name: Create nginx services config files
   template: src=services.conf.j2 dest="{{ nginx_docker_conf_dir }}/conf.d/services.conf"
   register: svc_cnf
-
-- name: Reload nginx config
-  shell: docker kill -s HUP nginx
-  when: svc_cnf is changed
+  notify: Reload nginx
 
 - name: Create nginx logrotate config
   template:
@@ -50,6 +31,21 @@
     owner: root
     group: root
     mode: 0700
+
+- name: Create systemd service unit file for nginx
+  template:
+    src:   nginx.service.j2
+    dest:  "{{ nginx_docker_systemd_units_dir }}/nginx.service"
+    owner: root
+    group: root
+    mode:  0644
+  when: ansible_service_mgr == 'systemd'
+  notify:
+    - Reload systemd
+    - Restart nginx
+
+- name: Start nginx
+  service: name=nginx enabled=yes state=started
 
 - include_tasks: selinux.yml
   when: ansible_os_family|lower == 'redhat'

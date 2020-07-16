@@ -1,0 +1,20 @@
+[Unit]
+Description=nginx Docker Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker stop nginx
+ExecStartPre=-/usr/bin/docker rm nginx
+ExecStartPre=-/usr/bin/docker pull {{ nginx_docker_image }}
+ExecReload=/usr/bin/docker kill -s HUP nginx
+ExecStart=/usr/bin/docker run --name nginx \
+                -p {{ nginx_docker_ports|join(' -p ') }} \
+                -v {{ nginx_docker_volumes|join(' -v ') }} \
+                {{ nginx_docker_image }}
+Restart=unless-stopped
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
