@@ -10,6 +10,7 @@
   template:
     src: nginx.conf.j2
     dest: "{{ nginx_docker_conf_dir }}/nginx.conf"
+    mode: 0400
   register: nginx_cnf
   notify: Restart nginx
 
